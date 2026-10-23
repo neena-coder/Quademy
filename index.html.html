@@ -1,0 +1,813 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Quademy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap">
+<style>
+/* Layout: square-grid brand site. Pixel-mosaic hero that the visitor paints with the cursor, tagline as the spine (Learn / Build / Become), one dark team band, plain sections around it. */
+:root {
+  --bg: #F2F9FE;
+  --bg-2: #E3F2FB;
+  --surface: #FFFFFF;
+  --fg: #0B1020;
+  --fg-soft: #3D4A63;
+  --line: #C4D9E8;
+  --accent: #0069A8;
+  --pulse: #00B4FF;
+  --on-pulse: #0B1020;
+  --signal: #067A57;
+  --signal-fill: #10B981;
+  --glow: #BDE8FF;
+  --extrude: #A6DCF6;
+  --px-b: #2E7CF6;
+  --panel: #0B1020;
+  --panel-fg: #EAF4FF;
+  --panel-soft: #A9B8D2;
+  --panel-line: #1A2547;
+
+  --font-display: "Outfit", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1020; --bg-2: #0F1730; --surface: #121B36; --fg: #EAF4FF; --fg-soft: #A5B4CE;
+    --line: #24304F; --accent: #3CC4FF; --signal: #34D399; --glow: rgba(0,180,255,0.20);
+    --extrude: #13307A; --px-b: #1E56C8; --panel: #101A3B; --panel-line: #1C2A55;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1020; --bg-2: #0F1730; --surface: #121B36; --fg: #EAF4FF; --fg-soft: #A5B4CE;
+  --line: #24304F; --accent: #3CC4FF; --signal: #34D399; --glow: rgba(0,180,255,0.20);
+  --extrude: #13307A; --px-b: #1E56C8; --panel: #101A3B; --panel-line: #1C2A55;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 30; background: var(--bg);
+}
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.05; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.wrap {
+  width: 100%; max-width: 1200px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.label {
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--accent); font-weight: 500;
+}
+
+/* header */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.top-in { display: flex; align-items: center; gap: 20px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: 1.45rem; letter-spacing: -0.02em; }
+.brand svg { width: 30px; height: 30px; color: var(--fg); flex: none; }
+.nav { display: flex; gap: 28px; margin-left: auto; font-weight: 500; font-size: 0.95rem; }
+.nav a { text-decoration: none; color: var(--fg-soft); }
+.nav a:hover { color: var(--fg); }
+.top-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.nav + .top-actions { margin-left: 0; }
+.theme {
+  font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+  background: transparent; color: var(--fg); border: 1px solid var(--line); padding: 9px 12px; cursor: pointer;
+}
+.theme:hover { border-color: var(--fg); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 1rem; text-decoration: none; cursor: pointer;
+  padding: 14px 24px; border: 2px solid var(--fg); background: transparent; color: var(--fg);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--fg); }
+.btn-primary { background: var(--pulse); color: var(--on-pulse); border-color: var(--fg); }
+.btn-sm { padding: 9px 16px; font-size: 0.92rem; }
+
+/* hero */
+.hero {
+  padding-block: clamp(36px, 6vw, 88px);
+  background: radial-gradient(55% 75% at 8% 85%, var(--glow), transparent 70%);
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 26px; align-items: flex-start; min-width: 0; }
+h1 { font-weight: 700; font-size: clamp(2.7rem, 8.4vw, 5.6rem); letter-spacing: -0.035em; line-height: 0.98; }
+.x {
+  display: inline-block; color: var(--accent);
+  text-shadow: 1px 1px 0 var(--extrude), 2px 2px 0 var(--extrude), 3px 3px 0 var(--extrude), 4px 4px 0 var(--extrude), 5px 5px 0 var(--extrude), 6px 6px 0 var(--extrude);
+}
+.lead { font-size: 1.22rem; color: var(--fg-soft); max-width: 46ch; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 0; margin: 0; list-style: none; }
+.facts li { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-soft); }
+.facts li::before { content: ""; width: 9px; height: 9px; background: var(--signal-fill); flex: none; }
+
+.stage { position: relative; aspect-ratio: 1 / 1; width: 100%; max-width: 100%; background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; }
+.stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: crosshair; }
+.stage-mark { position: absolute; left: 50%; top: 50%; width: 38%; transform: translate(-50%, -52%); color: var(--fg); pointer-events: none; }
+.stage-mark svg { width: 100%; height: auto; display: block; }
+.stage-cap {
+  position: absolute; left: 12px; bottom: 12px; max-width: calc(100% - 24px);
+  background: var(--bg); border: 1px solid var(--line); color: var(--fg-soft);
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; padding: 7px 10px;
+}
+
+/* sections */
+.sec { padding-block: clamp(56px, 8vw, 112px); scroll-margin-top: 72px; }
+.alt { background: var(--bg-2); }
+.sec-head { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); }
+h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
+.sub { color: var(--fg-soft); font-size: 1.125rem; max-width: 56ch; }
+
+/* tagline spine */
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+.trio-item { border-top: 2px solid var(--fg); padding-top: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.bar { display: flex; gap: 5px; }
+.bar i { width: 16px; height: 16px; border: 1.5px solid var(--line); display: block; }
+.bar i.on { background: var(--pulse); border-color: var(--pulse); }
+.trio-word { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 4.4vw, 3.4rem); letter-spacing: -0.03em; line-height: 1; }
+.trio-word span { color: var(--accent); }
+.trio-item p { color: var(--fg-soft); max-width: 36ch; }
+
+/* tracks */
+.tracks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.track { display: flex; flex-direction: column; gap: 18px; padding: 28px; background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.track-pilot { background: var(--panel); color: var(--panel-fg); border-color: var(--panel); }
+.pill { align-self: flex-start; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border: 1px solid var(--line); color: var(--fg-soft); }
+.pill-pilot { background: var(--pulse); border-color: var(--pulse); color: var(--on-pulse); font-weight: 500; }
+.track h3 { font-size: 1.9rem; font-weight: 700; }
+.track p { color: var(--fg-soft); }
+.track-pilot p { color: var(--panel-soft); }
+.track ul { list-style: none; margin: auto 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; font-size: 0.98rem; }
+.track-pilot ul { border-top-color: var(--panel-line); }
+.track li { display: flex; gap: 12px; align-items: baseline; }
+.track li::before { content: ""; width: 7px; height: 7px; background: var(--pulse); flex: none; transform: translateY(-1px); }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.step { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 2px solid var(--fg); min-width: 0; }
+.step-n { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--accent); font-weight: 500; }
+.step h3 { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; }
+.step p { color: var(--fg-soft); font-size: 1rem; }
+
+/* team band */
+.team {
+  background-color: var(--panel); color: var(--panel-fg); padding-block: clamp(56px, 8vw, 112px);
+  background-image: linear-gradient(var(--panel-line) 1px, transparent 1px), linear-gradient(90deg, var(--panel-line) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+.team-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.team h2 { font-size: clamp(2.3rem, 5.4vw, 4.2rem); }
+.team h2 span { color: var(--pulse); }
+.team-copy { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.team-copy p { color: var(--panel-soft); font-size: 1.15rem; max-width: 46ch; }
+.team .label { color: var(--pulse); }
+.roles { display: flex; flex-direction: column; border: 1px solid var(--panel-line); background: var(--panel); min-width: 0; }
+.role { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 22px 24px; border-bottom: 1px solid var(--panel-line); }
+.role:last-child { border-bottom: 0; }
+.role b { font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); font-weight: 600; letter-spacing: -0.02em; }
+.role span { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pulse); text-align: right; }
+
+/* faq */
+.faq { max-width: 820px; border-bottom: 1px solid var(--line); }
+.faq details { border-top: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 22px 0; font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; letter-spacing: -0.01em;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); font-size: 1.5rem; font-weight: 400; color: var(--accent); flex: none; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { color: var(--fg-soft); padding: 0 0 24px; max-width: 62ch; }
+
+/* register */
+.reg-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.reg-side { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.reg-points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; color: var(--fg-soft); }
+.reg-points li { display: flex; gap: 12px; align-items: baseline; }
+.reg-points li::before { content: ""; width: 8px; height: 8px; background: var(--signal-fill); flex: none; }
+.side-handle { display: flex; flex-direction: column; gap: 12px; padding-top: 22px; border-top: 1px solid var(--line); }
+.handle-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.handle { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3.6vw, 2rem); letter-spacing: -0.02em; overflow-wrap: anywhere; user-select: all; }
+.copied { font-family: var(--font-mono); font-size: 0.78rem; color: var(--signal); min-height: 1.2em; }
+
+.reg, .reg-done { background: var(--surface); border: 1px solid var(--line); padding: clamp(20px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.reg .btn-primary, .reg-done .btn { align-self: flex-start; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.field label { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-soft); }
+.field input, .field select, .field textarea {
+  font: inherit; font-size: 1rem; color: var(--fg); background: var(--bg);
+  border: 1.5px solid var(--line); border-radius: 0; padding: 13px 14px; width: 100%; min-width: 0;
+}
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--fg-soft); }
+.field textarea { resize: vertical; min-height: 96px; }
+.check { display: flex; gap: 12px; align-items: flex-start; color: var(--fg-soft); font-size: 0.95rem; line-height: 1.5; cursor: pointer; }
+.check input { width: 20px; height: 20px; flex: none; margin: 2px 0 0; accent-color: var(--accent); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-msg { min-height: 1.2em; font-size: 0.95rem; color: var(--fg-soft); }
+.reg-done h3 { font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 700; }
+.reg-done p { color: var(--fg-soft); max-width: 52ch; }
+.reg-done textarea {
+  font: inherit; font-family: var(--font-mono); font-size: 0.88rem; line-height: 1.55; color: var(--fg); background: var(--bg);
+  border: 1.5px solid var(--line); border-radius: 0; padding: 14px; width: 100%; min-height: 220px; resize: vertical;
+}
+.done-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* footer */
+.foot { border-top: 1px solid var(--line); padding-block: 36px; }
+.foot-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
+.foot .brand { font-size: 1.25rem; }
+.foot small { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; color: var(--fg-soft); text-transform: uppercase; }
+
+@media (max-width: 960px) {
+  .hero-grid, .team-grid, .reg-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage { max-width: 560px; }
+  .tracks { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .nav { display: none; }
+  .nav + .top-actions { margin-left: auto; }
+  .trio { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .steps, .row2 { grid-template-columns: minmax(0, 1fr); }
+  .btn { padding: 13px 20px; }
+  .role { flex-direction: column; gap: 4px; }
+  .role span { text-align: left; }
+  .brand { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="qmark" viewBox="0 0 72 72">
+    <path fill="currentColor" fill-rule="evenodd" d="M0 0H60V40H40V60H0Z M20 20H40V40H20Z"/>
+    <path fill="var(--pulse)" d="M47 45L68 52L58 56L55 67Z"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top" aria-label="Quademy home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 307.02 307.31"><defs><style>.cls-1{fill:#fdfdfd;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 213.25 142.17 213.25 142.17 142.17 71.08 142.17 71.08 71.08 142.17 71.08 142.17 142.17 213.25 142.17 213.25 0 0 0"/><polygon class="cls-2" points="307.02 236.23 306.85 236.26 248.88 248.21 248.84 248.41 229.17 252.44 247 256.8 236 307.02 235.93 307.31 222.96 253.72 222.24 250.75 213.23 213.53 213.24 213.53 272.19 227.8 307.02 236.23"/></g></g></svg>
+      Quademy
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#tracks">Tracks</a>
+      <a href="#how">How it works</a>
+      <a href="#team">Team</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="top-actions">
+      <button class="theme" id="theme" type="button" aria-label="Switch colour theme">Dark</button>
+      <a class="btn btn-sm" href="#register" style="background-color: #10B981;">Register</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="label">Online tech skills academy for young Nigerians</span>
+        <h1>Your future,<br><span class="x">Skillfully Built.</span></h1>
+        <p class="lead">Quademy teaches graphic design, motion graphics and video editing. You learn online, build real projects, and finish with proof of what you can do.</p>
+        <div class="cta-row">
+          <a class="btn" href="#register" style="background-color: #10B981;">Register for the pilot</a>
+          <a class="btn" href="#tracks">See the tracks</a>
+        </div>
+        <ul class="facts">
+          <li>100% online</li>
+          <li>Beginner friendly</li>
+          <li>Project based</li>
+        </ul>
+      </div>
+      <div class="stage">
+        <canvas id="px" aria-hidden="true"></canvas>
+        <div class="stage-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 307.02 307.31"><defs><style>.cls-1{fill:#fdfdfd;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 213.25 142.17 213.25 142.17 142.17 71.08 142.17 71.08 71.08 142.17 71.08 142.17 142.17 213.25 142.17 213.25 0 0 0"/><polygon class="cls-2" points="307.02 236.23 306.85 236.26 248.88 248.21 248.84 248.41 229.17 252.44 247 256.8 236 307.02 235.93 307.31 222.96 253.72 222.24 250.75 213.23 213.53 213.24 213.53 272.19 227.8 307.02 236.23"/></g></g></svg></div>
+        <div class="stage-cap">Move over the grid. Build something.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="approach">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">The Quademy way</span>
+        <h2>Learn. Build. Become.</h2>
+      </div>
+      <div class="trio">
+        <div class="trio-item">
+          <div class="bar" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+          <div class="trio-word">Learn<span>.</span></div>
+          <p>Hands-on training from the first session. You open the software and make something, every time.</p>
+        </div>
+        <div class="trio-item">
+          <div class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></div>
+          <div class="trio-word">Build<span>.</span></div>
+          <p>Every lesson feeds a real-world project. You end up with work you can show a client or an employer.</p>
+        </div>
+        <div class="trio-item">
+          <div class="bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+          <div class="trio-word">Become<span>.</span></div>
+          <p>A freelancer, an employee or a founder. You get the skill and the confidence to choose.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="tracks">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Tracks</span>
+        <h2>Pick a craft.</h2>
+        <p class="sub">We start with graphic design. Motion graphics and video editing follow once the first class is up and running.</p>
+      </div>
+      <div class="tracks">
+        <article class="track track-pilot">
+          <span class="pill pill-pilot">Pilot track</span>
+          <h3>Graphic design</h3>
+          <p>Learn how to turn an idea into a clear, good-looking visual that a business would pay for.</p>
+          <ul>
+            <li>Logos and brand identity</li>
+            <li>Social media posts and campaigns</li>
+            <li>Posters, flyers and print</li>
+            <li>A portfolio ready for clients</li>
+          </ul>
+        </article>
+        <article class="track">
+          <span class="pill">Next</span>
+          <h3>Motion graphics</h3>
+          <p>Make type, logos and shapes move so content stops people mid-scroll.</p>
+          <ul>
+            <li>Animated logos and titles</li>
+            <li>Motion posts for social media</li>
+            <li>Short promo animations</li>
+            <li>A motion reel to show off</li>
+          </ul>
+        </article>
+        <article class="track">
+          <span class="pill">Next</span>
+          <h3>Video editing</h3>
+          <p>Cut raw footage into stories people finish watching.</p>
+          <ul>
+            <li>Short-form edits for reels and TikTok</li>
+            <li>Promo and event videos</li>
+            <li>Sound, pacing and colour</li>
+            <li>A showreel for clients</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">How it works</span>
+        <h2>From first lesson to first paid job.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-n">01</span>
+          <h3>Join online</h3>
+          <p>Everything runs online. No campus, no commute, no waiting for a classroom.</p>
+        </li>
+        <li class="step">
+          <span class="step-n">02</span>
+          <h3>Learn by making</h3>
+          <p>Short lessons, then a project. You practise on briefs that look like real work.</p>
+        </li>
+        <li class="step">
+          <span class="step-n">03</span>
+          <h3>Build your portfolio</h3>
+          <p>Finish with projects you can send to clients, employers and collaborators.</p>
+        </li>
+        <li class="step">
+          <span class="step-n">04</span>
+          <h3>Get on the team</h3>
+          <p>The strongest students in each skill earn a paid place on the Quademy team.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="team" id="team">
+    <div class="wrap team-grid">
+      <div class="team-copy">
+        <span class="label">The Quademy team</span>
+        <h2>Top students <span>get paid.</span></h2>
+        <p>The best students from every skill join the Quademy team. Teach what you know, or work on real client projects. You are paid for each job you handle.</p>
+      </div>
+      <div class="roles">
+        <div class="role"><b>Teach</b><span>Guide new students</span></div>
+        <div class="role"><b>Work</b><span>Real client projects</span></div>
+        <div class="role"><b>Earn</b><span>Paid per job</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Questions</span>
+        <h2>Before you join.</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>Is Quademy fully online?</summary>
+          <p>Yes. Every lesson, project and review happens online, so you can learn from wherever you are in Nigeria.</p>
+        </details>
+        <details>
+          <summary>Do I need experience?</summary>
+          <p>No. Quademy is built for beginners. If you are creative and ready to practise, you can start.</p>
+        </details>
+        <details>
+          <summary>Which skill starts first?</summary>
+          <p>Graphic design. It is the pilot track. Motion graphics and video editing open after it.</p>
+        </details>
+        <details>
+          <summary>What will I have at the end?</summary>
+          <p>Real projects in your portfolio and the confidence to look for freelance work, a job, or to start your own thing.</p>
+        </details>
+        <details>
+          <summary>When does the pilot start and what does it cost?</summary>
+          <p>Dates and fees are announced on our social pages first. Follow @quademy_official so you hear it before anyone else.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec alt" id="register">
+    <div class="wrap reg-grid">
+      <div class="reg-side">
+        <span class="label">Register</span>
+        <h2>Be in the first class.</h2>
+        <p class="sub">Fill in the form and we will contact you on WhatsApp or email when the pilot dates are confirmed. It takes about two minutes.</p>
+        <ul class="reg-points">
+          <li>Beginners welcome. Graphic design opens first.</li>
+          <li>No payment is taken on this form.</li>
+          <li>We only use your details to contact you about Quademy.</li>
+        </ul>
+        <div class="side-handle">
+          <span class="label">Prefer to message us?</span>
+          <div class="handle-row">
+            <div class="handle" id="handle">@quademy_official</div>
+            <button class="btn btn-sm" id="copy" type="button">Copy handle</button>
+          </div>
+          <div class="copied" id="copied" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="reg-wrap">
+        <form class="reg" id="regForm">
+          <div class="field">
+            <label for="f-name">Full name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160">
+            </div>
+            <div class="field">
+              <label for="f-wa">WhatsApp number</label>
+              <input id="f-wa" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="0803 000 0000" required maxlength="30">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-loc">City and state</label>
+            <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Port Harcourt, Rivers" required maxlength="120">
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="f-track">Track you want</label>
+              <select id="f-track" name="track" required>
+                <option value="Graphic design (pilot)" selected>Graphic design (pilot)</option>
+                <option value="Motion graphics (tell me when it opens)">Motion graphics (tell me when it opens)</option>
+                <option value="Video editing (tell me when it opens)">Video editing (tell me when it opens)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-level">Your level</label>
+              <select id="f-level" name="level" required>
+                <option value="Complete beginner" selected>Complete beginner</option>
+                <option value="I have tried a little">I have tried a little</option>
+                <option value="I already do some work">I already do some work</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-device">What will you learn on?</label>
+            <select id="f-device" name="device" required>
+              <option value="Laptop or desktop" selected>A laptop or desktop</option>
+              <option value="Phone only">My phone only</option>
+              <option value="No device yet">I do not have a device yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-why">What do you want to do with this skill? (optional)</label>
+            <textarea id="f-why" name="why" maxlength="600" placeholder="Freelance, get a job, start a business, build something of your own."></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="f-site">Leave this field empty</label>
+            <input id="f-site" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <label class="check" for="f-consent">
+            <input id="f-consent" name="consent" type="checkbox" required>
+            <span>I agree that Quademy can contact me about the pilot.</span>
+          </label>
+          <button class="btn btn-primary" id="regSubmit" type="submit">Register</button>
+          <div class="form-msg" id="regMsg" role="status" aria-live="polite"></div>
+        </form>
+
+        <div class="reg-done" id="regOk" hidden>
+          <span class="label">Registered</span>
+          <h3>You are in, <span id="okName"></span>.</h3>
+          <p>We have your details. We will message you on WhatsApp or email as soon as the pilot dates are confirmed.</p>
+        </div>
+
+        <div class="reg-done" id="regManual" hidden>
+          <span class="label">One last step</span>
+          <h3>Send us your details.</h3>
+          <p>This page cannot send your registration by itself. Copy the message below and send it to @quademy_official on Instagram, X, Facebook or TikTok. Your place is held once we receive it.</p>
+          <textarea id="regText" readonly aria-label="Your registration message"></textarea>
+          <div class="done-actions">
+            <button class="btn btn-primary" id="regCopy" type="button">Copy message</button>
+            <button class="btn" id="regBack" type="button">Edit my details</button>
+          </div>
+          <div class="form-msg" id="regCopied" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="#top" aria-label="Quademy home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 307.02 307.31"><defs><style>.cls-1{fill:#fdfdfd;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 213.25 142.17 213.25 142.17 142.17 71.08 142.17 71.08 71.08 142.17 71.08 142.17 142.17 213.25 142.17 213.25 0 0 0"/><polygon class="cls-2" points="307.02 236.23 306.85 236.26 248.88 248.21 248.84 248.41 229.17 252.44 247 256.8 236 307.02 235.93 307.31 222.96 253.72 222.24 250.75 213.23 213.53 213.24 213.53 272.19 227.8 307.02 236.23"/></g></g></svg>
+      Quademy
+    </a>
+    <small>Learn. Build. Become.</small>
+    <small>&copy; 2026 Quademy</small>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme');
+
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function label() { themeBtn.textContent = current() === 'dark' ? 'Light' : 'Dark'; }
+  try { var saved = localStorage.getItem('qd-theme'); if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved); } catch (e) {}
+  label();
+  themeBtn.addEventListener('click', function () {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('qd-theme', next); } catch (e) {}
+    label();
+    window.dispatchEvent(new Event('qd-theme'));
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { label(); window.dispatchEvent(new Event('qd-theme')); });
+
+  var copyBtn = document.getElementById('copy');
+  var copied = document.getElementById('copied');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('handle').textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('handle'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copied.textContent = 'Handle selected. Copy it from your keyboard.';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { copied.textContent = 'Copied ' + text; }, selectIt);
+    } catch (e) { selectIt(); }
+  });
+
+  /* registration
+     REGISTER_ENDPOINT: paste a Google Apps Script web app URL here when the page is hosted on your own site.
+     Left empty (or when the host blocks outside requests), the form builds a message the student sends to @quademy_official. */
+  var REGISTER_ENDPOINT = '';
+  var form = document.getElementById('regForm');
+  if (form) {
+    var okBox = document.getElementById('regOk');
+    var manualBox = document.getElementById('regManual');
+    var regMsg = document.getElementById('regMsg');
+    var regSubmit = document.getElementById('regSubmit');
+    var regText = document.getElementById('regText');
+    var regCopied = document.getElementById('regCopied');
+    var showOnly = function (el) {
+      form.hidden = el !== form; okBox.hidden = el !== okBox; manualBox.hidden = el !== manualBox;
+    };
+    var manualFallback = function (d) {
+      regText.value = [
+        'Quademy pilot registration',
+        'Name: ' + d.name,
+        'Email: ' + d.email,
+        'WhatsApp: ' + d.whatsapp,
+        'Location: ' + d.location,
+        'Track: ' + d.track,
+        'Level: ' + d.level,
+        'Learning on: ' + d.device,
+        'Goal: ' + (d.why || '-'),
+        'I agree that Quademy can contact me about the pilot.'
+      ].join('\n');
+      regSubmit.disabled = false; regMsg.textContent = '';
+      showOnly(manualBox);
+      manualBox.scrollIntoView({ block: 'nearest' });
+    };
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var fd = new FormData(form);
+      if (fd.get('website')) return;
+      var d = {};
+      ['name', 'email', 'whatsapp', 'location', 'track', 'level', 'device', 'why'].forEach(function (k) { d[k] = String(fd.get(k) || '').trim(); });
+      d.consent = 'yes'; d.submittedAt = new Date().toISOString();
+      if (!REGISTER_ENDPOINT) { manualFallback(d); return; }
+      regSubmit.disabled = true; regMsg.textContent = 'Sending your registration...';
+      fetch(REGISTER_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) })
+        .then(function () {
+          document.getElementById('okName').textContent = d.name.split(' ')[0];
+          regSubmit.disabled = false; regMsg.textContent = '';
+          showOnly(okBox); okBox.scrollIntoView({ block: 'nearest' });
+        })
+        .catch(function () { manualFallback(d); });
+    });
+    document.getElementById('regBack').addEventListener('click', function () { showOnly(form); regCopied.textContent = ''; });
+    document.getElementById('regCopy').addEventListener('click', function () {
+      function pick() { regText.focus(); regText.select(); regCopied.textContent = 'Message selected. Copy it from your keyboard.'; }
+      try { navigator.clipboard.writeText(regText.value).then(function () { regCopied.textContent = 'Copied. Now paste it into a message to @quademy_official.'; }, pick); }
+      catch (err) { pick(); }
+    });
+  }
+
+  /* pixel grid */
+  var cv = document.getElementById('px');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLS = 16, W = 0, H = 0, cell = 0, rows = 0, dpr = 1, heat, base, colors;
+  var lastMove = -1e9, running = true, tick = 0, ghost = null;
+
+  function rgb(hex) {
+    hex = String(hex).trim();
+    if (hex.charAt(0) !== '#') return [0, 180, 255];
+    if (hex.length === 4) hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+    var n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function readColors() {
+    var cs = getComputedStyle(root);
+    colors = {
+      a: rgb(cs.getPropertyValue('--pulse')),
+      b: rgb(cs.getPropertyValue('--px-b')),
+      hot: rgb(cs.getPropertyValue('--signal-fill')),
+      fg: cs.getPropertyValue('--fg').trim() || '#0B1020',
+      bg: cs.getPropertyValue('--bg').trim() || '#FFFFFF'
+    };
+  }
+  function seeded(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function resize() {
+    var r = cv.getBoundingClientRect();
+    if (!r.width) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cell = W / COLS; rows = Math.ceil(H / cell);
+    var rnd = seeded(7), old = heat;
+    base = new Float32Array(COLS * rows);
+    heat = new Float32Array(COLS * rows);
+    for (var i = 0; i < base.length; i++) base[i] = rnd();
+    if (reduce) seedStatic(rnd);
+    readColors();
+    draw();
+  }
+  function seedStatic(rnd) {
+    for (var k = 0; k < 34; k++) {
+      var t = k / 33;
+      var c = Math.min(COLS - 1, Math.floor(1 + t * (COLS - 3)));
+      var r = Math.max(0, Math.min(rows - 1, Math.floor(rows * 0.18 + t * rows * 0.6 + Math.sin(k * 0.9) * 1.4)));
+      heat[r * COLS + c] = 0.45 + 0.55 * rnd();
+    }
+  }
+  function paint(x, y) {
+    var c = Math.floor(x / cell), r = Math.floor(y / cell);
+    if (c < 0 || r < 0 || c >= COLS || r >= rows) return;
+    heat[r * COLS + c] = 1;
+    var n = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    for (var i = 0; i < n.length; i++) {
+      var cc = c + n[i][0], rr = r + n[i][1];
+      if (cc >= 0 && rr >= 0 && cc < COLS && rr < rows) {
+        var k = rr * COLS + cc;
+        if (heat[k] < 0.4) heat[k] = 0.4;
+      }
+    }
+  }
+  function arrow(x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.moveTo(0, 0); ctx.lineTo(0, 17); ctx.lineTo(4.5, 12.8); ctx.lineTo(7.6, 20); ctx.lineTo(10.4, 18.8);
+    ctx.lineTo(7.4, 11.8); ctx.lineTo(13, 11.8); ctx.closePath();
+    ctx.fillStyle = colors.fg; ctx.strokeStyle = colors.bg; ctx.lineWidth = 1.5;
+    ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+  function draw() {
+    if (!W || !heat) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < COLS; c++) {
+        var i = r * COLS + c, b = base[i];
+        var g = 0.15 + 0.85 * (1 - (c / COLS + r / rows) / 2);
+        var al = 0.07 + 0.5 * b * g;
+        var cr = lerp(colors.b[0], colors.a[0], b), cg = lerp(colors.b[1], colors.a[1], b), cb = lerp(colors.b[2], colors.a[2], b);
+        var h = heat[i];
+        if (h > 0.01) {
+          var m = Math.min(1, h * 1.3);
+          cr = lerp(cr, colors.hot[0], m); cg = lerp(cg, colors.hot[1], m); cb = lerp(cb, colors.hot[2], m);
+          al = Math.max(al, h * 0.95);
+        }
+        ctx.fillStyle = 'rgba(' + (cr | 0) + ',' + (cg | 0) + ',' + (cb | 0) + ',' + al.toFixed(3) + ')';
+        ctx.fillRect(c * cell + 0.5, r * cell + 0.5, cell - 1, cell - 1);
+      }
+    }
+    if (ghost) arrow(ghost.x, ghost.y);
+  }
+  function loop(t) {
+    if (!running) return;
+    tick++;
+    if (tick % 30 === 0) readColors();
+    if (t - lastMove > 2200) {
+      ghost = { x: W * (0.5 + 0.38 * Math.sin(t / 1700)), y: H * (0.5 + 0.34 * Math.sin(t / 1150 + 1)) };
+      paint(ghost.x, ghost.y);
+    } else { ghost = null; }
+    for (var i = 0; i < heat.length; i++) { heat[i] *= 0.955; if (heat[i] < 0.01) heat[i] = 0; }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  cv.addEventListener('pointermove', function (e) {
+    var r = cv.getBoundingClientRect();
+    lastMove = performance.now();
+    paint(e.clientX - r.left, e.clientY - r.top);
+    if (reduce) draw();
+  });
+  window.addEventListener('qd-theme', function () { readColors(); draw(); });
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(cv); else window.addEventListener('resize', resize);
+  resize();
+
+  if (!reduce) {
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (es) {
+        var vis = es[0].isIntersecting;
+        if (vis && !running) { running = true; requestAnimationFrame(loop); }
+        if (!vis) running = false;
+      }).observe(cv);
+    }
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+
+</body></html>
