@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Quademy</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap">
@@ -45,8 +49,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+img, svg, canvas { max-width: 100%; }
 html { scroll-behavior: smooth; }
 body {
+  margin: 0;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
@@ -261,6 +268,8 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
   .btn { transition: none; }
 }
 </style>
+</head>
+<body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="qmark" viewBox="0 0 72 72">
@@ -272,7 +281,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#top" aria-label="Quademy home">
-      <svg aria-hidden="true"><use href="#qmark"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680.52 681.17"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 472.69 315.13 472.69 315.13 315.13 157.56 315.13 157.56 157.56 315.13 157.56 315.13 315.13 472.69 315.13 472.69 0 0 0"/><polygon class="cls-2" points="680.52 523.61 680.15 523.69 551.66 550.17 551.57 550.61 507.96 559.55 547.49 569.2 523.09 680.52 522.96 681.17 494.2 562.38 492.61 555.81 472.63 473.3 472.65 473.3 603.32 504.92 680.52 523.61"/></g></g></svg>
       Quademy
     </a>
     <nav class="nav" aria-label="Main">
@@ -307,7 +316,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
       </div>
       <div class="stage">
         <canvas id="px" aria-hidden="true"></canvas>
-        <div class="stage-mark" aria-hidden="true"><svg viewBox="0 0 72 72"><use href="#qmark"/></svg></div>
+        <div class="stage-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680.52 681.17"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 472.69 315.13 472.69 315.13 315.13 157.56 315.13 157.56 157.56 315.13 157.56 315.13 315.13 472.69 315.13 472.69 0 0 0"/><polygon class="cls-2" points="680.52 523.61 680.15 523.69 551.66 550.17 551.57 550.61 507.96 559.55 547.49 569.2 523.09 680.52 522.96 681.17 494.2 562.38 492.61 555.81 472.63 473.3 472.65 473.3 603.32 504.92 680.52 523.61"/></g></g></svg></div>
         <div class="stage-cap">Move over the grid. Build something.</div>
       </div>
     </div>
@@ -455,7 +464,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
         </details>
         <details>
           <summary>When does the pilot start and what does it cost?</summary>
-          <p>Dates and fees are announced on our social pages first. Follow @quademy_official so you hear it before anyone else.</p>
+          <p>Dates and fees are announced on our social pages first. Follow @officialquademy so you hear it before anyone else.</p>
         </details>
       </div>
     </div>
@@ -475,7 +484,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
         <div class="side-handle">
           <span class="label">Prefer to message us?</span>
           <div class="handle-row">
-            <div class="handle" id="handle">@quademy_official</div>
+            <div class="handle" id="handle">@officialquademy</div>
             <button class="btn btn-sm" id="copy" type="button">Copy handle</button>
           </div>
           <div class="copied" id="copied" role="status" aria-live="polite"></div>
@@ -553,7 +562,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
         <div class="reg-done" id="regManual" hidden>
           <span class="label">One last step</span>
           <h3>Send us your details.</h3>
-          <p>This page cannot send your registration by itself. Copy the message below and send it to @quademy_official on Instagram, X, Facebook or TikTok. Your place is held once we receive it.</p>
+          <p>This page cannot send your registration by itself. Copy the message below and send it to @officialquademy on Instagram, X, Facebook or TikTok. Your place is held once we receive it.</p>
           <textarea id="regText" readonly aria-label="Your registration message"></textarea>
           <div class="done-actions">
             <button class="btn btn-primary" id="regCopy" type="button">Copy message</button>
@@ -569,7 +578,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
 <footer class="foot">
   <div class="wrap foot-in">
     <a class="brand" href="#top" aria-label="Quademy home">
-      <svg aria-hidden="true"><use href="#qmark"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680.52 681.17"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#10b981;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon class="cls-1" points="0 0 0 472.69 315.13 472.69 315.13 315.13 157.56 315.13 157.56 157.56 315.13 157.56 315.13 315.13 472.69 315.13 472.69 0 0 0"/><polygon class="cls-2" points="680.52 523.61 680.15 523.69 551.66 550.17 551.57 550.61 507.96 559.55 547.49 569.2 523.09 680.52 522.96 681.17 494.2 562.38 492.61 555.81 472.63 473.3 472.65 473.3 603.32 504.92 680.52 523.61"/></g></g></svg>
       Quademy
     </a>
     <small>Learn. Build. Become.</small>
@@ -615,8 +624,8 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
 
   /* registration
      REGISTER_ENDPOINT: paste a Google Apps Script web app URL here when the page is hosted on your own site.
-     Left empty (or when the host blocks outside requests), the form builds a message the student sends to @quademy_official. */
-  var REGISTER_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw7OLNfuyl0-qsPnWuIuQahz8P-Wyv4pN2ENE9Dc8QARTSKr7zUYYwY1U7H8cVRZs8/exec';
+     Left empty (or when the host blocks outside requests), the form builds a message the student sends to @officialquademy. */
+  var REGISTER_ENDPOINT = '';
   var form = document.getElementById('regForm');
   if (form) {
     var okBox = document.getElementById('regOk');
@@ -665,7 +674,7 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
     document.getElementById('regBack').addEventListener('click', function () { showOnly(form); regCopied.textContent = ''; });
     document.getElementById('regCopy').addEventListener('click', function () {
       function pick() { regText.focus(); regText.select(); regCopied.textContent = 'Message selected. Copy it from your keyboard.'; }
-      try { navigator.clipboard.writeText(regText.value).then(function () { regCopied.textContent = 'Copied. Now paste it into a message to @quademy_official.'; }, pick); }
+      try { navigator.clipboard.writeText(regText.value).then(function () { regCopied.textContent = 'Copied. Now paste it into a message to @officialquademy.'; }, pick); }
       catch (err) { pick(); }
     });
   }
@@ -808,3 +817,6 @@ h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; }
   }
 })();
 </script>
+
+</body>
+</html>
